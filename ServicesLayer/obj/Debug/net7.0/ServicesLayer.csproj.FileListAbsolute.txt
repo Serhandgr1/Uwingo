@@ -1,0 +1,17 @@
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\ServicesLayer.deps.json
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\ServicesLayer.dll
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\ServicesLayer.pdb
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\DataAccessLayer.dll
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\EntitiesLayer.dll
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\DataAccessLayer.pdb
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\bin\Debug\net7.0\EntitiesLayer.pdb
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.csproj.AssemblyReference.cache
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.AssemblyInfoInputs.cache
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.AssemblyInfo.cs
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.csproj.CoreCompileInputs.cache
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.csproj.CopyComplete
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.dll
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\refint\ServicesLayer.dll
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ServicesLayer.pdb
+C:\Users\dogru\source\repos\Uwingo\ServicesLayer\obj\Debug\net7.0\ref\ServicesLayer.dll
