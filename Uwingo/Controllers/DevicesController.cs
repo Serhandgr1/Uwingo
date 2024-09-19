@@ -8,7 +8,7 @@ namespace Uwingo.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class DevicesController : ControllerBase
-    {
+    {//FirstCommit
         private IServiceManager _serviceManager;
         private ILogger<DevicesController> _logger;
 
