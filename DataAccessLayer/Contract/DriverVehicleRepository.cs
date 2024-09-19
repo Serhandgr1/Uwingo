@@ -12,7 +12,7 @@ namespace DataAccessLayer.Contract
     {
         private readonly DataContext _context;
         public DriverVehicleRepository(DataContext context):base(context)=> _context = context;
-        public IQueryable<DriverVehicle> GetDriverVehicle(int id, bool trackchanges) => GenericReadExpression(x => x.DriversId == id, trackchanges);
+        public IQueryable<DriverVehicle> GetDriverVehicle(int id, bool trackchanges) => GenericReadExpression(x => x.DriverVehicleId == id, trackchanges);
 
     }
 }

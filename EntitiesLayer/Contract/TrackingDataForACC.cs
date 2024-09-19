@@ -12,8 +12,9 @@ namespace EntitiesLayer.Contract
     {
         [Key]
         public int AccelerometerDataId { get; set; }
-        public int DeviceId { get; set; }
         public Devices Devices { get; set; }
+        [ForeignKey("Devices")]
+        public int DeviceId { get; set; }
         public DateTime Timestamp { get; set; }
         [Column(TypeName = "decimal(6,3)")]
         public decimal AccX { get; set; }

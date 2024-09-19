@@ -9,6 +9,7 @@ namespace ServicesLayer.Abstract
 {
     public interface IDevicesService
     {
+        Task<DevicesDTO> GetByIdDevice(int id);
         Task<IEnumerable<DevicesDTO>> GetAllDevices();
         Task<DevicesDTO> CreateDevices(DevicesDTO devices);
         void UpdateDevices(DevicesDTO devices);

@@ -36,6 +36,17 @@ namespace ServicesLayer.Contract
             }    
            
         }
+        public  PacketsDTO GetByIdPacket(int id) {
+            try {
+                var packet = _repository.PacketsRepository.GetPackets(id, false).SingleOrDefault();
+                var dto = _mapper.Map<PacketsDTO>(packet);
+                return dto;
+            } catch (Exception ex) {
+                _logger.LogError(ex.ToString());
+                return new PacketsDTO();
+            }
+            
+        }
         public async Task<PacketsDTO> CreatePackets(PacketsDTO packets)
         {
             try {

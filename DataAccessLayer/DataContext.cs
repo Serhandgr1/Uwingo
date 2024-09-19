@@ -27,6 +27,7 @@ namespace DataAccessLayer
         DbSet<TrackingDataForSTD> TrackingDataForSTDs { get; set; }
         DbSet<TrackingDataForACC> TrackingDataForACCs { get; set; }
         DbSet<Vehicles> Vehicles { get; set; }
+        DbSet<PeriodicMaintenance> PeriodicMaintenances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

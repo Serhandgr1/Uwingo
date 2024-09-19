@@ -26,19 +26,38 @@ namespace ServicesLayer.Contract
         }
         public async Task<IEnumerable<PacketContentDTO>> GetAllPacketContect()
         {
-            try {
+            try
+            {
                 var data = await _repository.PacketContentRepository.GenericRead(false);
                 var dto = _mapper.Map<IEnumerable<PacketContentDTO>>(data);
                 return dto;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
                 return Enumerable.Empty<PacketContentDTO>();
             }
-           
+
         }
-        public async Task<PacketContentDTO> CreatePacketContent(PacketContentDTO packetContent) 
+        public PacketContentDTO GetByIdPacketContent(int id)
         {
-            try {
+            try
+            {
+                var packet = _repository.PacketContentRepository.GetPacketContent(id, false).SingleOrDefault();
+                var dto = _mapper.Map<PacketContentDTO>(packet);
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return new PacketContentDTO();
+            }
+
+        }
+        public async Task<PacketContentDTO> CreatePacketContent(PacketContentDTO packetContent)
+        {
+            try
+            {
                 var data = _mapper.Map<PacketContent>(packetContent);
                 if (data != null)
                 {
@@ -46,15 +65,18 @@ namespace ServicesLayer.Contract
                     _repository.Save();
                 }
                 return packetContent;
-            }  catch(Exception ex) {
-               _logger.LogError(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
                 return new PacketContentDTO();
             }
-          
+
         }
-        public void UpdatePacketContent(PacketContentDTO packetContent) 
+        public void UpdatePacketContent(PacketContentDTO packetContent)
         {
-            try {
+            try
+            {
                 var data = _mapper.Map<PacketContent>(packetContent);
                 if (data != null)
                 {
@@ -65,24 +87,29 @@ namespace ServicesLayer.Contract
                         _repository.Save();
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
-            } 
-            
+            }
+
         }
-        public void DeletePacketContent(int id) 
+        public void DeletePacketContent(int id)
         {
-            try {
+            try
+            {
                 var data = _repository.PacketContentRepository.GetPacketContent(id, false).SingleOrDefault();
                 if (data != null)
                 {
                     _repository.PacketContentRepository.GenericDelete(data);
                     _repository.Save();
                 }
-            }  catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
-             }
-         
+            }
+
         }
     }
 }

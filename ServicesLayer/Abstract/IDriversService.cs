@@ -9,6 +9,7 @@ namespace ServicesLayer.Abstract
 {
     public interface IDriversService
     {
+        DriversDTO GetByIdDriver(int id);
         Task<IEnumerable<DriversDTO>> GetAllDrivers();
         Task<DriversDTO> CreateDrivers(DriversDTO drivers);
         void UpdateDrivers(DriversDTO drivers);

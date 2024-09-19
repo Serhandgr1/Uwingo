@@ -11,12 +11,14 @@ namespace EntitiesLayer.Contract
     public class DriverVehicle
     {
         [Key]
-        public int DriveId { get; set; }
+        public int DriverVehicleId { get; set; }
+        public  Drivers Drivers { get; set; }
+        [ForeignKey("Drivers")]
         public int DriversId { get; set; }
-        public  Drivers Drives { get; set; }
-        public int VehicleId { get; set; }
         public Vehicles Vehicles { get; set; }
+        [ForeignKey("Vehicles")]
+        public int VehicleId { get; set; }
         public DateTime IdentificationDate { get; set; }
-        public DateTime TerminationDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace ServicesLayer.Abstract
 {
     public interface ITrackingDataForACCService
     {
+        TrackingDataForACCDTO GetByIdTrackingDataForAcc(int id);
         Task<IEnumerable<TrackingDataForACCDTO>> GetAllTarckingDataAcc();
         Task<TrackingDataForACCDTO> CreateTrackingDataForAcc(TrackingDataForACCDTO trackingDataForACCDTO);
         void UpdateTrackingDataForAcc(TrackingDataForACCDTO trackingDataForACCDTO);

@@ -9,6 +9,7 @@ namespace ServicesLayer.Abstract
 {
     public interface IPacketsService
     {
+        PacketsDTO GetByIdPacket(int id);
         Task<IEnumerable<PacketsDTO>> GetAllPackets();
         Task<PacketsDTO> CreatePackets(PacketsDTO packets);
         void UpdatePackets(PacketsDTO packets);

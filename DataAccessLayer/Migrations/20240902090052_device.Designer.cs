@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240808103107_firts")]
-    partial class firts
+    [Migration("20240902090052_device")]
+    partial class device
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,26 +36,20 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("DeviceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DriversDriverId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("InstallDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("RemoveDate")
+                    b.Property<DateTime?>("RemoveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VehiclesVehicleId")
-                        .HasColumnType("int");
-
                     b.HasKey("ConnectionId");
 
-                    b.HasIndex("DriversDriverId");
+                    b.HasIndex("DeviceId");
 
-                    b.HasIndex("VehiclesVehicleId");
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("DeviceVehicles");
                 });
@@ -90,11 +84,11 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("EntitiesLayer.Contract.DriverVehicle", b =>
                 {
-                    b.Property<int>("DriveId")
+                    b.Property<int>("DriverVehicleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DriveId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DriverVehicleId"));
 
                     b.Property<int>("DriversId")
                         .HasColumnType("int");
@@ -102,20 +96,17 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("IdentificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("TerminationDate")
+                    b.Property<DateTime?>("TerminationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VehiclesVehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DriveId");
+                    b.HasKey("DriverVehicleId");
 
                     b.HasIndex("DriversId");
 
-                    b.HasIndex("VehiclesVehicleId");
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("DriverVehicles");
                 });
@@ -160,12 +151,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("PacketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PacketsPacketId")
-                        .HasColumnType("int");
-
                     b.HasKey("PacketContentId");
 
-                    b.HasIndex("PacketsPacketId");
+                    b.HasIndex("PacketId");
 
                     b.ToTable("PacketContents");
                 });
@@ -200,27 +188,24 @@ namespace DataAccessLayer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccelerometerDataId"));
 
                     b.Property<decimal>("AccX")
-                        .HasColumnType("decimal(6, 3)");
+                        .HasColumnType("decimal(6,3)");
 
                     b.Property<decimal>("AccY")
-                        .HasColumnType("decimal(6, 3)");
+                        .HasColumnType("decimal(6,3)");
 
                     b.Property<decimal>("AccZ")
-                        .HasColumnType("decimal(6, 3)");
+                        .HasColumnType("decimal(6,3)");
 
                     b.Property<decimal>("Altitude")
-                        .HasColumnType("decimal(6, 2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<decimal>("COG")
-                        .HasColumnType("decimal(6, 2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DeviceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DevicesDeviceId")
                         .HasColumnType("int");
 
                     b.Property<string>("EW")
@@ -231,10 +216,10 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(11, 6)");
+                        .HasColumnType("decimal(11,6)");
 
                     b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(10, 6)");
+                        .HasColumnType("decimal(10,6)");
 
                     b.Property<string>("NS")
                         .IsRequired()
@@ -246,14 +231,14 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(8)");
 
                     b.Property<decimal>("Speed")
-                        .HasColumnType("decimal(6, 2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("AccelerometerDataId");
 
-                    b.HasIndex("DevicesDeviceId");
+                    b.HasIndex("DeviceId");
 
                     b.ToTable("TrackingDataForACCs");
                 });
@@ -267,10 +252,10 @@ namespace DataAccessLayer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrackingDataId"));
 
                     b.Property<decimal>("Altitude")
-                        .HasColumnType("decimal(18, 3)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal>("COG")
-                        .HasColumnType("decimal(6, 2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<bool>("DIN1")
                         .HasColumnType("bit");
@@ -286,7 +271,7 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(1)");
 
                     b.Property<decimal>("FuelLevel")
-                        .HasColumnType("decimal(18, 3)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<byte>("GSM_RSSI")
                         .HasColumnType("tinyint");
@@ -295,17 +280,17 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(18, 6)");
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(18, 6)");
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("NS")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
                     b.Property<decimal>("Odometer")
-                        .HasColumnType("decimal(18, 3)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("Satellites")
                         .HasColumnType("int");
@@ -316,13 +301,13 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(8)");
 
                     b.Property<decimal>("Speed")
-                        .HasColumnType("decimal(18, 3)");
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TotalSpentFuel")
-                        .HasColumnType("decimal(6, 2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.HasKey("TrackingDataId");
 
@@ -567,15 +552,34 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("EntitiesLayer.Contract.DeviceVehicles", b =>
                 {
-                    b.HasOne("EntitiesLayer.Contract.Drivers", "Drivers")
+                    b.HasOne("EntitiesLayer.Contract.Devices", "Devices")
                         .WithMany()
-                        .HasForeignKey("DriversDriverId")
+                        .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
                         .WithMany()
-                        .HasForeignKey("VehiclesVehicleId")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Devices");
+
+                    b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("EntitiesLayer.Contract.DriverVehicle", b =>
+                {
+                    b.HasOne("EntitiesLayer.Contract.Drivers", "Drivers")
+                        .WithMany()
+                        .HasForeignKey("DriversId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -584,30 +588,11 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Vehicles");
                 });
 
-            modelBuilder.Entity("EntitiesLayer.Contract.DriverVehicle", b =>
-                {
-                    b.HasOne("EntitiesLayer.Contract.Drivers", "Drives")
-                        .WithMany()
-                        .HasForeignKey("DriversId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
-                        .WithMany()
-                        .HasForeignKey("VehiclesVehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Drives");
-
-                    b.Navigation("Vehicles");
-                });
-
             modelBuilder.Entity("EntitiesLayer.Contract.PacketContent", b =>
                 {
                     b.HasOne("EntitiesLayer.Contract.Packets", "Packets")
                         .WithMany()
-                        .HasForeignKey("PacketsPacketId")
+                        .HasForeignKey("PacketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -618,7 +603,7 @@ namespace DataAccessLayer.Migrations
                 {
                     b.HasOne("EntitiesLayer.Contract.Devices", "Devices")
                         .WithMany()
-                        .HasForeignKey("DevicesDeviceId")
+                        .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

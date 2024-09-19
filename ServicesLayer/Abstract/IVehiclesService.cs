@@ -9,6 +9,7 @@ namespace ServicesLayer.Abstract
 {
     public interface IVehiclesService
     {
+        VehiclesDTO GetByIdVehicle(int id);
         Task<IEnumerable<VehiclesDTO>> GetAllVehicles();
         Task<VehiclesDTO> CreateVehicles(VehiclesDTO vehicles);
         void UpdateVehicles(VehiclesDTO vehicles);

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ServicesLayer.Contract
 {
-    public class VehiclesService  : IVehiclesService 
+    public class VehiclesService : IVehiclesService
     {
         private readonly IRepositoryManager _repository;
         private readonly ILogger<VehiclesService> _logger;
@@ -36,6 +36,21 @@ namespace ServicesLayer.Contract
             {
                 _logger.LogError(ex.ToString());
                 return Enumerable.Empty<VehiclesDTO>();
+            }
+
+        }
+        public VehiclesDTO GetByIdVehicle(int id)
+        {
+            try
+            {
+                var data = _repository.VehiclesRepository.GetVehicles(id, false).SingleOrDefault();
+                var dto = _mapper.Map<VehiclesDTO>(data);
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return new VehiclesDTO();
             }
 
         }

@@ -35,6 +35,11 @@ namespace ServicesLayer.Contract
             }
              
         }
+        public DriversDTO GetByIdDriver(int id) {
+           var driver=  _repository.DriversRepository.GetDrivers(id,false).SingleOrDefault();
+           var dto= _mapper.Map<DriversDTO>(driver);
+            return dto;
+        }
         public async Task<DriversDTO> CreateDrivers(DriversDTO drivers) 
         {
             try {

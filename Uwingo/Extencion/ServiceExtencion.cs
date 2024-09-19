@@ -19,6 +19,7 @@ namespace Uwingo.Extencion
         }
         public static void ConfiguerRepostoryManager(this IServiceCollection services) 
         {
+            services.AddScoped<IPeriodicMaintenanceRepository, PeriodicMaintenanceRepository>();
             services.AddScoped<IDevicesRepository, DevicesRepository>();
             services.AddScoped<IDevicesVehiclesRepository, DeviceVehiclesRepository>();
             services.AddScoped<IDriversRepository, DriversRepository>();
@@ -30,6 +31,7 @@ namespace Uwingo.Extencion
             services.AddScoped<IVehiclesRepository,VehiclesRepository>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             //BaseGenericRepositoryReferance
+            services.AddScoped<IGenericRepostory<PeriodicMaintenance>, GenericRepository<PeriodicMaintenance>>();
             services.AddScoped<IGenericRepostory<Devices>,GenericRepository<Devices>>();
             services.AddScoped<IGenericRepostory<DeviceVehicles>, GenericRepository<DeviceVehicles>>();
             services.AddScoped<IGenericRepostory<Drivers>, GenericRepository<Drivers>>();
@@ -52,6 +54,7 @@ namespace Uwingo.Extencion
             services.AddScoped<ITrackingDataForACCService, TrackingDataForACCService>();
             services.AddScoped<ITrackingDataForSTDService, TrackingDataForSTDService>();
             services.AddScoped<IVehiclesService, VehiclesService>();
+            services.AddScoped<IPeriodicMaintenanceService, PeriodicMaintenanceService>();
             
         }
     }

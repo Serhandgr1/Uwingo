@@ -12,6 +12,7 @@ namespace DataAccessLayer.Manager
     {
         private readonly DataContext _context;
         private readonly Lazy<IDevicesRepository> _devicesRepository;
+        private readonly Lazy<IPeriodicMaintenanceRepository> _periodicMaintenanceRepository;
         private readonly Lazy<IDevicesVehiclesRepository> _devicesVehiclesRepository; 
         private readonly Lazy<IDriversRepository> _driversRepository;
         private readonly Lazy<IDriverVehicleRepository> _vehiclesVehicleRepository;
@@ -23,6 +24,7 @@ namespace DataAccessLayer.Manager
         public RepositoryManager(DataContext context)
         {
             _context = context;
+            _periodicMaintenanceRepository = new Lazy<IPeriodicMaintenanceRepository>(new PeriodicMaintenanceRepository(_context));
             _devicesRepository = new Lazy<IDevicesRepository>(new DevicesRepository(_context));
             _devicesVehiclesRepository = new Lazy<IDevicesVehiclesRepository>(new DeviceVehiclesRepository(_context));
             _driversRepository = new Lazy<IDriversRepository>(new DriversRepository(_context));
@@ -33,6 +35,7 @@ namespace DataAccessLayer.Manager
             _trackingDataForSTDRepository = new Lazy<ITrackingDataForSTDRepository>(new TrackingDataForSTDRepository(_context));
             _vehiclesRepository = new Lazy<IVehiclesRepository>(new VehiclesRepository(_context));
         }
+        public IPeriodicMaintenanceRepository PeriodicMaintenance => _periodicMaintenanceRepository.Value;
         public IDevicesRepository Devices => _devicesRepository.Value;
         public IDevicesVehiclesRepository DevicesVehiclesRepository => _devicesVehiclesRepository.Value;
         public IDriversRepository DriversRepository => _driversRepository.Value;

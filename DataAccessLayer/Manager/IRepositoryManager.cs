@@ -9,6 +9,7 @@ namespace DataAccessLayer.Manager
 {
     public interface IRepositoryManager
     {
+        IPeriodicMaintenanceRepository PeriodicMaintenance { get; }
         IDevicesRepository Devices { get; }
         IDevicesVehiclesRepository DevicesVehiclesRepository { get; }
         IDriversRepository DriversRepository { get; }

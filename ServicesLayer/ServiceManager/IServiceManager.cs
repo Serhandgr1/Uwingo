@@ -9,6 +9,7 @@ namespace ServicesLayer.ServiceManager
 {
     public interface IServiceManager
     {
+        IPeriodicMaintenanceService periodicMaintenance { get; }
         IDevicesService devicesService { get; }
         IDeviceVehiclesService deviceVehiclesService { get; }
         IDriversService driversService { get; }

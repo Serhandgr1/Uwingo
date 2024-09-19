@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ServicesLayer.Contract
 {
-    public class TrackingDataForACCService  : ITrackingDataForACCService 
+    public class TrackingDataForACCService : ITrackingDataForACCService
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
@@ -24,22 +24,41 @@ namespace ServicesLayer.Contract
             _mapper = mapper;
             _logger = logger;
         }
-        public async Task<IEnumerable<TrackingDataForACCDTO>> GetAllTarckingDataAcc() 
+        public async Task<IEnumerable<TrackingDataForACCDTO>> GetAllTarckingDataAcc()
         {
-            try {
+            try
+            {
                 var data = await _repository.TrackingDataForAccRepository.GenericRead(false);
                 var dto = _mapper.Map<IEnumerable<TrackingDataForACCDTO>>(data);
                 return dto;
-            }  catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
                 return Enumerable.Empty<TrackingDataForACCDTO>();
-              }
-          
+            }
+
+        }
+        public TrackingDataForACCDTO GetByIdTrackingDataForAcc(int id)
+        {
+            try
+            {
+                var data = _repository.TrackingDataForAccRepository.GetTrackingAcc(id, false).SingleOrDefault();
+                var dto = _mapper.Map<TrackingDataForACCDTO>(data);
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return new TrackingDataForACCDTO();
+            }
+
         }
         //site üzerinden veri gönderilmeyecek silinebilir test amaçlı
-        public async Task<TrackingDataForACCDTO> CreateTrackingDataForAcc(TrackingDataForACCDTO trackingDataForACCDTO) 
+        public async Task<TrackingDataForACCDTO> CreateTrackingDataForAcc(TrackingDataForACCDTO trackingDataForACCDTO)
         {
-            try {
+            try
+            {
                 var data = _mapper.Map<TrackingDataForACC>(trackingDataForACCDTO);
                 if (data != null)
                 {
@@ -47,16 +66,19 @@ namespace ServicesLayer.Contract
                     _repository.Save();
                 }
                 return trackingDataForACCDTO;
-            } catch (Exception ex) { 
-              _logger.LogError(ex.ToString()); 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
                 return new TrackingDataForACCDTO();
             }
-            
-        
+
+
         }
-        public void UpdateTrackingDataForAcc(TrackingDataForACCDTO trackingDataForACCDTO) 
+        public void UpdateTrackingDataForAcc(TrackingDataForACCDTO trackingDataForACCDTO)
         {
-            try {
+            try
+            {
                 var data = _mapper.Map<TrackingDataForACC>(trackingDataForACCDTO);
                 if (data != null)
                 {
@@ -67,24 +89,29 @@ namespace ServicesLayer.Contract
                         _repository.Save();
                     }
                 }
-            } catch (Exception ex) {
-                _logger.LogError(ex.ToString()); 
             }
-        
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+            }
+
         }
         public void DeleteTrackingDataForAcc(int id)
-        { try {
+        {
+            try
+            {
                 var data = _repository.TrackingDataForAccRepository.GetTrackingAcc(id, false).SingleOrDefault();
                 if (data != null)
                 {
                     _repository.TrackingDataForAccRepository.GenericDelete(data);
                     _repository.Save();
                 }
-            } catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
             }
-            
+
         }
     }
 }

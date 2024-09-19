@@ -33,26 +33,20 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("DeviceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DriversDriverId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("InstallDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("RemoveDate")
+                    b.Property<DateTime?>("RemoveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VehiclesVehicleId")
-                        .HasColumnType("int");
-
                     b.HasKey("ConnectionId");
 
-                    b.HasIndex("DriversDriverId");
+                    b.HasIndex("DeviceId");
 
-                    b.HasIndex("VehiclesVehicleId");
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("DeviceVehicles");
                 });
@@ -87,11 +81,11 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("EntitiesLayer.Contract.DriverVehicle", b =>
                 {
-                    b.Property<int>("DriveId")
+                    b.Property<int>("DriverVehicleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DriveId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DriverVehicleId"));
 
                     b.Property<int>("DriversId")
                         .HasColumnType("int");
@@ -99,20 +93,17 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("IdentificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("TerminationDate")
+                    b.Property<DateTime?>("TerminationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VehiclesVehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DriveId");
+                    b.HasKey("DriverVehicleId");
 
                     b.HasIndex("DriversId");
 
-                    b.HasIndex("VehiclesVehicleId");
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("DriverVehicles");
                 });
@@ -157,12 +148,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("PacketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PacketsPacketId")
-                        .HasColumnType("int");
-
                     b.HasKey("PacketContentId");
 
-                    b.HasIndex("PacketsPacketId");
+                    b.HasIndex("PacketId");
 
                     b.ToTable("PacketContents");
                 });
@@ -186,6 +174,33 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("PacketId");
 
                     b.ToTable("Packets");
+                });
+
+            modelBuilder.Entity("EntitiesLayer.Contract.PeriodicMaintenance", b =>
+                {
+                    b.Property<int>("PeriodicMaintenanceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PeriodicMaintenanceId"));
+
+                    b.Property<DateTime>("LastMaintenanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("NextMaintenanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Period")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PeriodicMaintenanceId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("PeriodicMaintenances");
                 });
 
             modelBuilder.Entity("EntitiesLayer.Contract.TrackingDataForACC", b =>
@@ -215,9 +230,6 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DeviceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DevicesDeviceId")
                         .HasColumnType("int");
 
                     b.Property<string>("EW")
@@ -250,7 +262,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("AccelerometerDataId");
 
-                    b.HasIndex("DevicesDeviceId");
+                    b.HasIndex("DeviceId");
 
                     b.ToTable("TrackingDataForACCs");
                 });
@@ -336,6 +348,9 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<int>("FirstKilometer")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsItForRent")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsThereDriver")
                         .HasColumnType("bit");
@@ -564,15 +579,34 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("EntitiesLayer.Contract.DeviceVehicles", b =>
                 {
-                    b.HasOne("EntitiesLayer.Contract.Drivers", "Drivers")
+                    b.HasOne("EntitiesLayer.Contract.Devices", "Devices")
                         .WithMany()
-                        .HasForeignKey("DriversDriverId")
+                        .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
                         .WithMany()
-                        .HasForeignKey("VehiclesVehicleId")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Devices");
+
+                    b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("EntitiesLayer.Contract.DriverVehicle", b =>
+                {
+                    b.HasOne("EntitiesLayer.Contract.Drivers", "Drivers")
+                        .WithMany()
+                        .HasForeignKey("DriversId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -581,41 +615,33 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Vehicles");
                 });
 
-            modelBuilder.Entity("EntitiesLayer.Contract.DriverVehicle", b =>
-                {
-                    b.HasOne("EntitiesLayer.Contract.Drivers", "Drives")
-                        .WithMany()
-                        .HasForeignKey("DriversId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
-                        .WithMany()
-                        .HasForeignKey("VehiclesVehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Drives");
-
-                    b.Navigation("Vehicles");
-                });
-
             modelBuilder.Entity("EntitiesLayer.Contract.PacketContent", b =>
                 {
                     b.HasOne("EntitiesLayer.Contract.Packets", "Packets")
                         .WithMany()
-                        .HasForeignKey("PacketsPacketId")
+                        .HasForeignKey("PacketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Packets");
                 });
 
+            modelBuilder.Entity("EntitiesLayer.Contract.PeriodicMaintenance", b =>
+                {
+                    b.HasOne("EntitiesLayer.Contract.Vehicles", "Vehicles")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicles");
+                });
+
             modelBuilder.Entity("EntitiesLayer.Contract.TrackingDataForACC", b =>
                 {
                     b.HasOne("EntitiesLayer.Contract.Devices", "Devices")
                         .WithMany()
-                        .HasForeignKey("DevicesDeviceId")
+                        .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

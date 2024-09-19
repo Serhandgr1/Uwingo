@@ -23,61 +23,100 @@ namespace ServicesLayer.Contract
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<DeviceVehiclesDTO>> GetAllDeviceVehicles() 
+        public async Task<IEnumerable<DeviceVehiclesDTO>> GetAllDeviceVehicles()
         {
-            try {
+            try
+            {
                 var data = await _repository.DevicesVehiclesRepository.GenericRead(false);
                 var dto = _mapper.Map<IEnumerable<DeviceVehiclesDTO>>(data);
                 return dto;
-            } catch (Exception ex) {
-                _logger.LogError(ex.ToString());
-                return  Enumerable.Empty<DeviceVehiclesDTO>();
             }
-          
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return Enumerable.Empty<DeviceVehiclesDTO>();
+            }
+
         }
-        public async Task<DeviceVehiclesDTO> CreateDeviceVehicles(DeviceVehiclesDTO deviceVehicles) 
+        public async Task<DeviceVehiclesDTO> GetByIdDeviceVehicle(int id)
         {
-            try {
+            var device = _repository.DevicesVehiclesRepository.GetDeviceVehicles(id, false);
+            var dto = _mapper.Map<DeviceVehiclesDTO>(device);
+            return dto;
+        }
+        public async Task<DeviceVehiclesDTO> CreateDeviceVehicles(DeviceVehiclesDTO deviceVehicles)
+        {
+            try
+            {
+               
                 var data = _mapper.Map<DeviceVehicles>(deviceVehicles);
                 if (data != null)
                 {
+                    var newDevice = _repository.Devices.GetDevices(deviceVehicles.DeviceId, false).SingleOrDefault();
+                    newDevice.IsConnectedVehicles = true;
+                    _repository.Devices.GenericUpdate(newDevice);
                     await _repository.DevicesVehiclesRepository.GenericCreate(data);
                     _repository.Save();
                 }
                 return deviceVehicles;
-            } catch (Exception ex) { 
-                    _logger.LogError(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
                 return new DeviceVehiclesDTO();
             }
-         
+
         }
-        public void UpdateDeviceVehicles(DeviceVehiclesDTO deviceVehicles) 
+        public async void UpdateDeviceVehicles(DeviceVehiclesDTO deviceVehicles)
         {
-            try {
+            try
+            {
                 var data = _mapper.Map<DeviceVehicles>(deviceVehicles);
                 if (data != null)
                 {
                     var dataCheck = _repository.DevicesVehiclesRepository.GetDeviceVehicles(data.ConnectionId, false).SingleOrDefault();
+                    if (dataCheck is not null && dataCheck.DeviceId != deviceVehicles.DeviceId) {
+                        var updateDevice = _repository.Devices.GetDevices(dataCheck.DeviceId, false).SingleOrDefault();
+                        updateDevice.IsConnectedVehicles = false;
+                        _repository.Devices.GenericUpdate(updateDevice);
+                       var newDevice = _repository.Devices.GetDevices(data.DeviceId,false).SingleOrDefault();
+                        newDevice.IsConnectedVehicles=true;
+                        _repository.Devices.GenericUpdate(newDevice);
+                    }
                     if (dataCheck != null)
                     {
-                        _repository.DevicesVehiclesRepository.GenericUpdate(data);
+                        dataCheck.RemoveDate = DateTime.Now;
+                        _repository.DevicesVehiclesRepository.GenericUpdate(dataCheck);
+                        data.ConnectionId = 0;
+                        data.InstallDate = DateTime.Now;
+                       await _repository.DevicesVehiclesRepository.GenericCreate(data);
                         _repository.Save();
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
             }
-            
+
         }
-        public void DeleteDeviceVehicles(int id) 
-        { try {
+        public void DeleteDeviceVehicles(int id)
+        {
+            try
+            {
                 var data = _repository.DevicesVehiclesRepository.GetDeviceVehicles(id, false).SingleOrDefault();
                 if (data != null)
                 {
-                    _repository.DevicesVehiclesRepository.GenericDelete(data);
+                   var deleteDevice= _repository.Devices.GetDevices(data.DeviceId,false).SingleOrDefault();
+                    deleteDevice.IsConnectedVehicles=false;
+                    _repository.Devices.GenericUpdate(deleteDevice);
+                    data.RemoveDate= DateTime.Now;
+                    _repository.DevicesVehiclesRepository.GenericUpdate(data);
                     _repository.Save();
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex.ToString());
             }
         }

@@ -37,6 +37,11 @@ namespace ServicesLayer.Contract
             }
 
         }
+        public async Task<DevicesDTO> GetByIdDevice(int id) {
+          var device=  _repository.Devices.GetDevices(id,false).SingleOrDefault();
+           var deviceById = _mapper.Map<DevicesDTO>(device);
+            return deviceById;
+        }
         public async Task<DevicesDTO> CreateDevices(DevicesDTO devices) 
         {
             try {

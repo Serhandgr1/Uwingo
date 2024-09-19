@@ -14,6 +14,7 @@ namespace ServicesLayer.ServiceManager
     public class ServiceManager : IServiceManager
     {
         private readonly Lazy<IDevicesService> _devicesService;
+        private readonly Lazy<IPeriodicMaintenanceService> _periodicMaintenanceService;
         private readonly Lazy<IDeviceVehiclesService> _deviceVehiclesService;
         private readonly Lazy<IDriversService> _driversService;
         private readonly Lazy<IDriverVehicleService> _driversVehiclesService;
@@ -22,9 +23,10 @@ namespace ServicesLayer.ServiceManager
         private readonly Lazy<ITrackingDataForACCService> _trackingDataForACCService;
         private readonly Lazy<ITrackingDataForSTDService> _trackingDataForSTDService;
         private readonly Lazy<IVehiclesService> _vehiclesService;
-        public ServiceManager(IRepositoryManager repository,IMapper mapper,ILogger<DevicesService> loggerDevices , ILogger<VehiclesService> loggerVehicles, ILogger<TrackingDataForSTDService> loggerTrackingDataForSTD, ILogger<TrackingDataForACCService> loggerTrackingDataForACC, ILogger<DeviceVehiclesService> loggerDeviceVehicles , ILogger<DriversService> loggerDrivers , ILogger<DriverVehicleService> loggerDriverVehicle, ILogger<PacketsService> loggerPackets , ILogger<PacketContentService> loggerPacketContent)
+        public ServiceManager(IRepositoryManager repository,IMapper mapper,ILogger<DevicesService> loggerDevices , ILogger<PeriodicMaintenanceService> loggerPeriodicMaintenance, ILogger<VehiclesService> loggerVehicles, ILogger<TrackingDataForSTDService> loggerTrackingDataForSTD, ILogger<TrackingDataForACCService> loggerTrackingDataForACC, ILogger<DeviceVehiclesService> loggerDeviceVehicles , ILogger<DriversService> loggerDrivers , ILogger<DriverVehicleService> loggerDriverVehicle, ILogger<PacketsService> loggerPackets , ILogger<PacketContentService> loggerPacketContent)
         {
-            _devicesService = new Lazy<IDevicesService>(()=> new DevicesService(repository, mapper , loggerDevices));
+           _devicesService = new Lazy<IDevicesService>(()=> new DevicesService(repository, mapper , loggerDevices));
+            _periodicMaintenanceService = new Lazy<IPeriodicMaintenanceService>(() => new PeriodicMaintenanceService(repository, mapper, loggerPeriodicMaintenance));
             _deviceVehiclesService = new Lazy<IDeviceVehiclesService>(() => new DeviceVehiclesService(repository, mapper, loggerDeviceVehicles));
             _driversService = new Lazy<IDriversService>(() => new DriversService(repository,mapper, loggerDrivers));
             _driversVehiclesService = new Lazy<IDriverVehicleService>(() => new DriverVehicleService(repository,mapper, loggerDriverVehicle));
@@ -34,6 +36,7 @@ namespace ServicesLayer.ServiceManager
             _trackingDataForSTDService = new Lazy<ITrackingDataForSTDService>(() => new TrackingDataForSTDService(repository, loggerTrackingDataForSTD, mapper));
             _vehiclesService = new Lazy<IVehiclesService>(() => new VehiclesService(repository, loggerVehicles, mapper));
         }
+        public IPeriodicMaintenanceService periodicMaintenance => _periodicMaintenanceService.Value;
         public IDevicesService devicesService => _devicesService.Value;
         public IDeviceVehiclesService deviceVehiclesService => _deviceVehiclesService.Value;
         public IDriversService driversService => _driversService.Value;

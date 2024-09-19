@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class firts : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,21 +102,21 @@ namespace DataAccessLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SerialNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Latitude = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
-                    Longitude = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
-                    Speed = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
-                    Altitude = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
-                    Odometer = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
+                    Latitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Longitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
+                    Speed = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    Altitude = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    Odometer = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     IsOpenIgnition = table.Column<bool>(type: "bit", nullable: false),
-                    FuelLevel = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
+                    FuelLevel = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     NS = table.Column<string>(type: "nvarchar(1)", nullable: false),
                     EW = table.Column<string>(type: "nvarchar(1)", nullable: false),
                     Satellites = table.Column<int>(type: "int", nullable: false),
-                    COG = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
+                    COG = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     DIN1 = table.Column<bool>(type: "bit", nullable: false),
                     DIN2 = table.Column<bool>(type: "bit", nullable: false),
                     DOUT = table.Column<bool>(type: "bit", nullable: false),
-                    TotalSpentFuel = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
+                    TotalSpentFuel = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     GSM_RSSI = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
@@ -256,28 +256,27 @@ namespace DataAccessLayer.Migrations
                     AccelerometerDataId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DeviceId = table.Column<int>(type: "int", nullable: false),
-                    DevicesDeviceId = table.Column<int>(type: "int", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AccX = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
+                    AccX = table.Column<decimal>(type: "decimal(6,3)", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    AccY = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
-                    AccZ = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
+                    AccY = table.Column<decimal>(type: "decimal(6,3)", nullable: false),
+                    AccZ = table.Column<decimal>(type: "decimal(6,3)", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Latitude = table.Column<decimal>(type: "decimal(11,0)", nullable: false),
+                    Latitude = table.Column<decimal>(type: "decimal(11,6)", nullable: false),
                     NS = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    Longitude = table.Column<decimal>(type: "decimal(10,0)", nullable: false),
+                    Longitude = table.Column<decimal>(type: "decimal(10,6)", nullable: false),
                     EW = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    Altitude = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
-                    Speed = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
-                    COG = table.Column<decimal>(type: "decimal(6,0)", nullable: false),
+                    Altitude = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    Speed = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    COG = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     IGN = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TrackingDataForACCs", x => x.AccelerometerDataId);
                     table.ForeignKey(
-                        name: "FK_TrackingDataForACCs_Devices_DevicesDeviceId",
-                        column: x => x.DevicesDeviceId,
+                        name: "FK_TrackingDataForACCs_Devices_DeviceId",
+                        column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "DeviceId",
                         onDelete: ReferentialAction.Cascade);
@@ -290,7 +289,6 @@ namespace DataAccessLayer.Migrations
                     PacketContentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PacketId = table.Column<int>(type: "int", nullable: false),
-                    PacketsPacketId = table.Column<int>(type: "int", nullable: false),
                     FieldName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -298,8 +296,8 @@ namespace DataAccessLayer.Migrations
                 {
                     table.PrimaryKey("PK_PacketContents", x => x.PacketContentId);
                     table.ForeignKey(
-                        name: "FK_PacketContents_Packets_PacketsPacketId",
-                        column: x => x.PacketsPacketId,
+                        name: "FK_PacketContents_Packets_PacketId",
+                        column: x => x.PacketId,
                         principalTable: "Packets",
                         principalColumn: "PacketId",
                         onDelete: ReferentialAction.Cascade);
@@ -312,9 +310,7 @@ namespace DataAccessLayer.Migrations
                     ConnectionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DeviceId = table.Column<int>(type: "int", nullable: false),
-                    DriversDriverId = table.Column<int>(type: "int", nullable: false),
                     VehicleId = table.Column<int>(type: "int", nullable: false),
-                    VehiclesVehicleId = table.Column<int>(type: "int", nullable: false),
                     InstallDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RemoveDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -322,14 +318,14 @@ namespace DataAccessLayer.Migrations
                 {
                     table.PrimaryKey("PK_DeviceVehicles", x => x.ConnectionId);
                     table.ForeignKey(
-                        name: "FK_DeviceVehicles_Drivers_DriversDriverId",
-                        column: x => x.DriversDriverId,
+                        name: "FK_DeviceVehicles_Drivers_DeviceId",
+                        column: x => x.DeviceId,
                         principalTable: "Drivers",
                         principalColumn: "DriverId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DeviceVehicles_Vehicles_VehiclesVehicleId",
-                        column: x => x.VehiclesVehicleId,
+                        name: "FK_DeviceVehicles_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "VehicleId",
                         onDelete: ReferentialAction.Cascade);
@@ -339,17 +335,16 @@ namespace DataAccessLayer.Migrations
                 name: "DriverVehicles",
                 columns: table => new
                 {
-                    DriveId = table.Column<int>(type: "int", nullable: false)
+                    DriverVehicleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DriversId = table.Column<int>(type: "int", nullable: false),
                     VehicleId = table.Column<int>(type: "int", nullable: false),
-                    VehiclesVehicleId = table.Column<int>(type: "int", nullable: false),
                     IdentificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TerminationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DriverVehicles", x => x.DriveId);
+                    table.PrimaryKey("PK_DriverVehicles", x => x.DriverVehicleId);
                     table.ForeignKey(
                         name: "FK_DriverVehicles_Drivers_DriversId",
                         column: x => x.DriversId,
@@ -357,8 +352,8 @@ namespace DataAccessLayer.Migrations
                         principalColumn: "DriverId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DriverVehicles_Vehicles_VehiclesVehicleId",
-                        column: x => x.VehiclesVehicleId,
+                        name: "FK_DriverVehicles_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "VehicleId",
                         onDelete: ReferentialAction.Cascade);
@@ -404,14 +399,14 @@ namespace DataAccessLayer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceVehicles_DriversDriverId",
+                name: "IX_DeviceVehicles_DeviceId",
                 table: "DeviceVehicles",
-                column: "DriversDriverId");
+                column: "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceVehicles_VehiclesVehicleId",
+                name: "IX_DeviceVehicles_VehicleId",
                 table: "DeviceVehicles",
-                column: "VehiclesVehicleId");
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DriverVehicles_DriversId",
@@ -419,19 +414,19 @@ namespace DataAccessLayer.Migrations
                 column: "DriversId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DriverVehicles_VehiclesVehicleId",
+                name: "IX_DriverVehicles_VehicleId",
                 table: "DriverVehicles",
-                column: "VehiclesVehicleId");
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PacketContents_PacketsPacketId",
+                name: "IX_PacketContents_PacketId",
                 table: "PacketContents",
-                column: "PacketsPacketId");
+                column: "PacketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TrackingDataForACCs_DevicesDeviceId",
+                name: "IX_TrackingDataForACCs_DeviceId",
                 table: "TrackingDataForACCs",
-                column: "DevicesDeviceId");
+                column: "DeviceId");
         }
 
         /// <inheritdoc />

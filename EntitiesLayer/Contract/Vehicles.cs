@@ -18,5 +18,6 @@ namespace EntitiesLayer.Contract
         public int FirstKilometer { get; set; }
         public string Plate { get; set; }
         public bool IsThereDriver { get; set; }
+        public bool? IsItForRent { get; set; }
     }
 }

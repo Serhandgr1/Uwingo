@@ -8,10 +8,10 @@ namespace EntitiesLayer.Abstract
 {
     public class DriverVehicleDTO
     {
-        public int DriveId { get; set; }
+        public int DriverVehicleId { get; set; }
         public int DriversId { get; set; }
         public int VehicleId { get; set; }
         public DateTime IdentificationDate { get; set; }
-        public DateTime TerminationDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
     }
 }

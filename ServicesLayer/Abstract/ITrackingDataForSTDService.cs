@@ -9,6 +9,7 @@ namespace ServicesLayer.Abstract
 {
     public interface ITrackingDataForSTDService
     {
+        TrackingDataForSTDDTO GetByIdTrackingDataForStd(int id);
         Task<IEnumerable<TrackingDataForSTDDTO>> GetAllTrackingDataForStd();
         Task<TrackingDataForSTDDTO> CreateTrackingDataForStd(TrackingDataForSTDDTO trackingDataForSTDDTO);
         void UpdateTrackingDataForStd(TrackingDataForSTDDTO trackingDataForSTDDTO);

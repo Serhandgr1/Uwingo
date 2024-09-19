@@ -13,6 +13,6 @@ namespace EntitiesLayer.Abstract
         public int DeviceId { get; set; }
         public int VehicleId { get; set; }
         public DateTime InstallDate { get; set; }
-        public DateTime RemoveDate { get; set; }
+        public DateTime? RemoveDate { get; set; }
     }
 }
