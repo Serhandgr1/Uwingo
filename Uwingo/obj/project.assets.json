@@ -3690,11 +3690,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dogru\\source\\repos\\Uwingo\\Uwingo\\Uwingo.csproj",
+      "projectUniqueName": "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\Uwingo\\Uwingo.csproj",
       "projectName": "Uwingo",
-      "projectPath": "C:\\Users\\dogru\\source\\repos\\Uwingo\\Uwingo\\Uwingo.csproj",
+      "projectPath": "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\Uwingo\\Uwingo.csproj",
       "packagesPath": "C:\\Users\\dogru\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dogru\\source\\repos\\Uwingo\\Uwingo\\obj\\",
+      "outputPath": "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\Uwingo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dogru\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3712,11 +3712,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\dogru\\source\\repos\\Uwingo\\DataAccessLayer\\DataAccessLayer.csproj": {
-              "projectPath": "C:\\Users\\dogru\\source\\repos\\Uwingo\\DataAccessLayer\\DataAccessLayer.csproj"
+            "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\DataAccessLayer\\DataAccessLayer.csproj": {
+              "projectPath": "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\DataAccessLayer\\DataAccessLayer.csproj"
             },
-            "C:\\Users\\dogru\\source\\repos\\Uwingo\\ServicesLayer\\ServicesLayer.csproj": {
-              "projectPath": "C:\\Users\\dogru\\source\\repos\\Uwingo\\ServicesLayer\\ServicesLayer.csproj"
+            "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\ServicesLayer\\ServicesLayer.csproj": {
+              "projectPath": "C:\\Users\\dogru\\Documents\\GitHub\\Uwingo\\ServicesLayer\\ServicesLayer.csproj"
             }
           }
         }
